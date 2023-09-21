@@ -44,5 +44,3 @@ def stable_matching_1a(file) -> dict:
                         matched_hospitals.remove(h2)
 
     return pairs
-
-print(stable_matching_1a('p1a_test.txt'))
