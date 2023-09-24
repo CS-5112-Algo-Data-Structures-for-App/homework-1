@@ -22,9 +22,28 @@ def stable_matching_1c(file) -> dict:
             hospitals_pref.append([int(x) for x in h_pref])
     
     # doctors to hospitals map
-    pairs = {} 
+    pairs = {}
+    unmatched_hospitals = list(range(n))
     
-    
+    while len(unmatched_hospitals) > 0: # continue looping if some hospitals are unmatched
         
+        for hospital in unmatched_hospitals: # only loop through the unmatched hospitals
+            for doctor in hospitals_pref[hospital]:
+                
+                if doctor not in pairs.keys(): # doctor does not have a match
+                    pairs[doctor] = hospital
+                    unmatched_hospitals.remove(hospital)
+                    break
+                else: # doctor has already been matched to an existing hospital
+                    if doctors_pref[doctor].index(hospital) < doctors_pref[doctor].index(pairs[doctor]):
+                        hospitals_pref[pairs[doctor]].remove(doctor) # remove doctor from list so it is not relooped over
+                        
+                        unmatched_hospitals.remove(hospital)
+                        pairs[doctor] = hospital
+                        break
+                
+
 
     return pairs
+
+# print(stable_matching_1c(r'test_p1_student_n10.txt'))

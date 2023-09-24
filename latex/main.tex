@@ -26,65 +26,80 @@ and applying for residency programs, but is concerned and confused about how the
 system works. As the local expert on algorithms, your colleague wants your 
 help understanding how matchings work. 
 
-\begin{subproblem}
-  (\textit{2 points})
-  Your friend tried to implement the textbook Gale-Shapley (G-S)
-  algorithm in Python. We provide this code in the homework materials in \texttt{problem\_1/p1\_a.py}. 
-  Using this implementation, your friend thinks they found a way to propose a
-  ranking that unfairly advantages them in getting the school of their choice.
+    \begin{subproblem}
+      (\textit{2 points})
+      Your friend tried to implement the textbook Gale-Shapley (G-S)
+      algorithm in Python. We provide this code in the homework materials in \texttt{problem\_1/p1\_a.py}. 
+      Using this implementation, your friend thinks they found a way to propose a
+      ranking that unfairly advantages them in getting the school of their choice.
 
-  There is a logical bug in the implementation. Provide a minimal test case
-  demonstrating the bug, i.e., an input with the smallest possible $n$ 
-  that, when run with the buggy implementation, outputs a non-stable matching. Write your test case input in \texttt{problem\_1/p1a\_test.txt}.  
-  
-\end{subproblem}
+      There is a logical bug in the implementation. Provide a minimal test case
+      demonstrating the bug, i.e., an input with the smallest possible $n$ 
+      that, when run with the buggy implementation, outputs a non-stable matching. Write your test case input in \texttt{problem\_1/p1a\_test.txt}.  
 
-\begin{subproblem}
-  (\textit{8 points})
-  Now we turn to characterizing the performance of
-  this implementation. Fix the bug from part (a) and conduct an 
-   of the implementation (see homework instructions
-  in the first page). Include the fixed code in \texttt{problem\_1/p1\_b.py}.
+    \end{subproblem}
 
-  Provide a brief explanation of the performance you observe, and explain why the implementation does not achieve $\bigO(n^2)$ run time advertised for the G-S algorithm.
-\end{subproblem}
+    \begin{subproblem}
+      (\textit{8 points})
+      Now we turn to characterizing the performance of
+      this implementation. Fix the bug from part (a) and conduct an 
+       of the implementation (see homework instructions
+      in the first page). Include the fixed code in \texttt{problem\_1/p1\_b.py}.
 
-\begin{solution}
-The environment used for the empirical performance analysis can be seen below:
-    \begin{itemize}
-        \item CPU: Intel(R) Core(TM) i7-8500Y CPU @ 1.50GHz (4 threads, 4.20GHz)
-        \item OS \& Version: Debian GNU/Linux 11 (bullseye)
-        \item Memory: 15.53 GB
-    \end{itemize}
+      Provide a brief explanation of the performance you observe, and explain why the implementation does not achieve $\bigO(n^2)$ run time advertised for the G-S algorithm.
+    \end{subproblem}
+
+    \begin{solution}
+    The environment used for the empirical performance analysis can be seen below:
+        \begin{itemize}
+            \item CPU: Intel(R) Core(TM) i7-8500Y CPU @ 1.50GHz (4 threads, 4.20GHz)
+            \item OS \& Version: Debian GNU/Linux 11 (bullseye)
+            \item Memory: 15.53 GB
+        \end{itemize}
+
+        The graph created from the empirical performance analysis can be seen below:
+        \begin{figure}[h]
+          \centering
+              \includegraphics[width=0.5\textwidth]{figures/problem-1b.png}
+        \end{figure}
+
+
+
+        The following code provided does not reach $\bigO(n^2)$. For the worst case scenario all hosptials have the same preference order for all doctors, and all doctors have the same preference order for all hospital. Additionally, the hospitals list is in the same order as the preferences that all the doctors have; therefore, a stable match is when the hosptial number and docter number matches (i.e. \{ 0:0, ... , n:n\}).This means, in the first loop through the first hosptial gets matched and all other hospitals are not matched. In the second loop the program goes through all the hospitals again except for the first/matched hosptial. In the second loop on the second hosptial gets matched because all other hosptials want to get the second student, but the second student's top choice is the second hosptial. This means we get a loop has a time complexity of $\bigO(n)$ and is run $\bigO(n!)$ times. This means the algorithm is $\bigO(n!)$.  
+    \end{solution}
+
+    \begin{subproblem}
+    \newcommand{\worstrank}{{\tt wr}}
+    (\textit{10 points})
+    Correct and improve the run time of the G-S implementation and turn it in for
+      auto-grading. It must be correct (always outputting a stable matching) and should run in the expected $\bigO(n^2)$ time. 
+      Provide a description of the optimizations you implemented.
+      Additionally, provide an empirical performance analysis of your
+      implementation in the same environment (same system and configuration) that
+      you performed the earlier analysis. Include your new implementation in \texttt{problem\_1/p1\_c.py}.
+    \end{subproblem}
+
+    \begin{solution}
+    In order to go from $\bigO(n!)$ to $\bigO(n^2)$ there are two changes that need to be made. The first is that in problem-1b the program loops through all the hospitals even if they are matched. This means that hosptials that are already matched are still checked even when they have already been matched to a doctor. This was fixed by setting a list of unmatched hosptials at the start. When a hospital gets matched they are removed from the unmatched hospital list, and it is this list that is continuously looped thorugh until all hospitals are matched. This means a hospital is only looped through if they dont have a match.
     
-    The graph created from the empirical performance analysis can be seen below:
+    The second change is the removal of a doctor from the hospitals prefernce list if they are already matched to a hosptial with a higher ranking. This prevents the program from looping through doctors that we know are matched to their preferred hospital.
+    
+    These two changes make it so the program only loops through all the doctors once for each hospital. Each of these operations is $\bigO(n)$ so the total time complexity is $\bigO(n^2)$.
+    
+    For the empirical performance analysis the environment was:
+        \begin{itemize}
+            \item CPU: Intel(R) Core(TM) i7-8500Y CPU @ 1.50GHz (4 threads, 4.20GHz)
+            \item OS \& Version: Debian GNU/Linux 11 (bullseye)
+            \item Memory: 15.53 GB
+        \end{itemize}
+        
+    The graph from the emperical performance analysis can be seen below:
     \begin{figure}[h]
       \centering
-          \includegraphics[width=0.5\textwidth]{figures/problem-1b.png}
+          \includegraphics[width=0.5\textwidth]{figures/problem-1c.png}
     \end{figure}
-
-
-
-    The following code provided does not reach $\bigO(n^2)$. For the worst case scenario all hosptials have the same preference order for all doctors, and all doctors have the same preference order for all hospital. Additionally, the hospitals list is in the same order as the preferences that all the doctors have; therefore, a stable match is when the hosptial number and docter number matches (i.e. \{ 0:0, ... , n:n\}).This means, in the first loop through the first hosptial gets matched and all other hospitals are not matched. In the second loop the program goes through all the hospitals again except for the first/matched hosptial. In the second loop on the second hosptial gets matched because all other hosptials want to get the second student, but the second student's top choice is the second hosptial. This means we get a loop has a time complexity of $\bigO(n)$ and is run $\bigO(n!)$ times. This means the algorithm is $\bigO(n!)$.  
-
-
-
-\end{solution}
-
-\begin{subproblem}
-\newcommand{\worstrank}{{\tt wr}}
-(\textit{10 points})
-Correct and improve the run time of the G-S implementation and turn it in for
-  auto-grading. It must be correct (always outputting a stable matching) and should run in the expected $\bigO(n^2)$ time. 
-  Provide a description of the optimizations you implemented.
-  Additionally, provide an empirical performance analysis of your
-  implementation in the same environment (same system and configuration) that
-  you performed the earlier analysis. Include your new implementation in \texttt{problem\_1/p1\_c.py}.
-\end{subproblem}
-
-\begin{solution}
-Please answer here.
-\end{solution}
+    
+    \end{solution}
 
 \end{problem}
 
