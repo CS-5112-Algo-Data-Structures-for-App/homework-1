@@ -2,9 +2,9 @@
 \usepackage{xcolor}
 
 % STUDENTS: Please fill these out with your information
-\newcommand{\name}{Fill Here}
-\newcommand{\netid}{Fill Here}
-\newcommand{\collaborators}{Fill Here}
+\newcommand{\name}{Matthew Shen}
+\newcommand{\netid}{mds377}
+\newcommand{\collaborators}{Linjing Rao(lr534)}
 % / STUDENT
 
 \newcommand{\hwnum}{1}
@@ -50,7 +50,25 @@ help understanding how matchings work.
 \end{subproblem}
 
 \begin{solution}
-The performance for problem 1b is $\bigO(n^3)$. This is because you in the worst case you need to loop through each hosptial to see if they are unmatched, loop through the previously matched students to see if they were already matched, and check if the  
+The environment used for the empirical performance analysis can be seen below:
+    \begin{itemize}
+        \item CPU: Intel(R) Core(TM) i7-8500Y CPU @ 1.50GHz (4 threads, 4.20GHz)
+        \item OS \& Version: Debian GNU/Linux 11 (bullseye)
+        \item Memory: 15.53 GB
+    \end{itemize}
+    
+    The graph created from the empirical performance analysis can be seen below:
+    \begin{figure}[h]
+      \centering
+          \includegraphics[width=0.5\textwidth]{figures/problem-1b.png}
+    \end{figure}
+
+
+
+    The following code provided does not reach $\bigO(n^2)$. For the worst case scenario all hosptials have the same preference order for all doctors, and all doctors have the same preference order for all hospital. Additionally, the hospitals list is in the same order as the preferences that all the doctors have; therefore, a stable match is when the hosptial number and docter number matches (i.e. \{ 0:0, ... , n:n\}).This means, in the first loop through the first hosptial gets matched and all other hospitals are not matched. In the second loop the program goes through all the hospitals again except for the first/matched hosptial. In the second loop on the second hosptial gets matched because all other hosptials want to get the second student, but the second student's top choice is the second hosptial. This means we get a loop has a time complexity of $\bigO(n)$ and is run $\bigO(n!)$ times. This means the algorithm is $\bigO(n!)$.  
+
+
+
 \end{solution}
 
 \begin{subproblem}
@@ -127,7 +145,7 @@ and briefly describe your implementation strategy. Include your implementation i
   \end{subproblem}
 
 \begin{solution}
-Please answer here.
+    The algorithm is correct. This algorithm was implemented. 
 \end{solution}
 
   \begin{subproblem}
@@ -142,7 +160,15 @@ Please answer here.
   \end{subproblem}
 
 \begin{solution}
-Please answer here.
+$$
+\mathcal{I} = \{[0_0,8_0], [8_1,9_1], [9_2,10_2], [0_3,5_3], [5_4,10_4]\}, [0,10]
+$$
+$$
+\mathcal{J}_{ans} = \{[0_0,8_0], [8_1,9_1], [9_2,10_2]\}
+$$
+$$
+\mathcal{J}_{opt} = \{[0_3,5_3], [5_4,10_4]\}
+$$
 \end{solution}
 
   \begin{subproblem}
@@ -156,9 +182,17 @@ Please answer here.
 \end{subproblem}
 
 \begin{solution}
-Please answer here.
+$$
+\mathcal{I} = \{[0_0,8_0], [8_1,9_1], [9_2,10_2], [0_3,5_3], [5_4,10_4]\}, [0,10]
+$$
+$$
+\mathcal{J}_{ans} = \{[0_0,8_0], [8_1,9_1], [9_2,10_2]\}
+$$
+$$
+\mathcal{J}_{opt} = \{[0_3,5_3], [5_4,10_4]\}
+$$
 \end{solution}
-
+    
 \begin{subproblem}
     \textbf{Delete Latest Redundant Interval:}
   Initialize $\mathcal{J}=\mathcal{I}$. While there
@@ -170,7 +204,18 @@ Please answer here.
 \end{subproblem}
 
 \begin{solution}
-Please answer here.
+This answer is not correct.
+
+$$
+\mathcal{I} = \{[0_0,7_0], [7_1,8_1], [8_2,9_2], [0_3,5_3], [5_4,10_4]\}, [0,10]
+$$
+
+$$
+\mathcal{J}_{ans} = \{[0_0,7_0], [7_1,8_1], [8_2,9_2]\}
+$$
+$$
+\mathcal{J}_{opt} = \{[0_3,5_3], [5_4,10_4]\}
+$$
 \end{solution}
 
 {\bf A note about tie-breaking:}
