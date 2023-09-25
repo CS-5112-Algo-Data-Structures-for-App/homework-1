@@ -7,28 +7,19 @@ output: List of list of integers composing the covering.
 TODO: implement a correct greedy algorithm from the homework.
 '''
 def interval_covering(M: int, intervals: list) -> list:
-#     J_lst = []
-#     c = 0
-
-#     intervals.sort()
-
-#     while M > c:
-
-#         intervals_w_c_lst = []
-#         for interval in intervals:
-#             if interval[0] > c:
-#                 break
-#             else:
-#                 intervals_w_c_lst.append(interval)
-# #         O(x) -> x is the num of intervals in intervals_w_c_lst
-#         J_lst.append(max(intervals_w_c_lst))
-
-#         c = max(J_lst)[1]
-
-#         for interval_c in intervals_w_c_lst:
-#             intervals.remove(interval_c)
-    
-#     return J_lst
-    
-    return_list = []
     intervals.sort()
+    J = []
+    c = 0
+    max_val = intervals[0]
+    i = 0
+    while i in range(len(intervals)):
+        if c >= intervals[i][0]:
+            if intervals[i][1] > max_val[1]:
+                max_val = intervals[i]
+            i += 1
+        else:
+            J.append(max_val)
+            c = max_val[1]
+    if max_val not in J:
+        J.append(max_val)
+    return J

@@ -160,7 +160,9 @@ and briefly describe your implementation strategy. Include your implementation i
   \end{subproblem}
 
 \begin{solution}
-    The algorithm is correct. This algorithm was implemented. 
+    The algorithm is correct. This algorithm was implemented. For the implementation we first sort the intervals by start time and then end time. We set up initial variables for the output list and c. We also set two pointer called max_val which starts off as the first interval and i which starts off as 0. Next, we loop through all the intervals. If a given interval's start time is less than 0 we look at if it ends after the current max_val. If it does end before the current max_val we start this as the new max_val. Regardless if the interval's start time is less than c we move onto the next interval. If the interval's start time is greater we can append the current max_val to the output list and set c to be the end time of the stored max_val. This is done because the list is sorted, so once we find a value greater than c we can leave the loop. Finally, we run into an issue with the final value missing from output list. This is solved by appending the final max_val to the output list, but a logical is used to stop an append if there is only a single value.
+    
+    The time complexity of this function is 
 \end{solution}
 
   \begin{subproblem}
