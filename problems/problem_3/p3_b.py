@@ -20,35 +20,38 @@ def number_of_large_inversions_3b(file, delta) -> int:
         return 0
     else:
         inversions = 0
-    
+        
+    # inversions = number_of_large_inversions_3a(lst,delta)
         a_lst = lst[:len(lst)//2]
         b_lst = lst[len(lst)//2:]
         
         # Sort and count
         inversions = inversions + number_of_large_inversions_3a(a_lst,delta)
-        # print(a_lst)
+#         # print(a_lst)
         # print('a inv: ' + str(inversions))
         inversions = inversions + number_of_large_inversions_3a(b_lst,delta)
-        # print(b_lst)
+#         # print(b_lst)
         # print('b inv: ' + str(inversions))
         a_lst.sort()
         b_lst.sort()
         
         
         # merge and count
-        L = []
         i = 0
         j = 0
-        while i <= len(a_lst)-1 and j <= len(b_lst)-1:
-            # print('i: ' + str(i) + ',' + 'j: ' + str(j))
-            if a_lst[i] > b_lst[j]+ delta:
-                print(a_lst[i], b_lst[j]+ delta)
-                inversions = inversions + 1
+        while i < len(a_lst) and j < len(b_lst):
+            
+            
+            if a_lst[i] > b_lst[j] + delta:
+                inversions += 1
                 j += 1
             else:
-                L.append(a_lst[i])
                 i += 1
-
+        
+        # while j < len(b_lst):
+        #     if i > len(a_lst):
+        #         inversions += (len(b_lst)-j)
+        #         break
             
     return inversions   
 
@@ -56,20 +59,21 @@ def number_of_large_inversions_3a(lst, delta) -> int:
     n = len(lst)
         
     inversions = 0
-    
-    
+        
     lst_sorted = sorted(lst)
     
-        
     for x_val in lst_sorted:
         x_idx = lst_sorted.index(x_val)
-        for y_val in lst_sorted[x_idx+1:]:            
+        for y_val in lst_sorted[x_idx+1:]:
             x_j = lst.index(x_val)
-            y_j = lst.index(y_val) + delta
-            if x_j > y_j:
+            y_j = lst.index(y_val)
+            if x_j > y_j + delta:
                 inversions += 1
-
                 
     return inversions
 
-print(number_of_large_inversions_3b(r'test.txt',1)) # ans 1
+import os
+
+print(number_of_large_inversions_3b(os.path.dirname(os.getcwd()) +  r'/tests/input/test_p3_public_n4_1.txt',1))
+
+# ans 2
