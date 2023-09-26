@@ -32,7 +32,25 @@ def cookies_distrubution_map(apartments) -> list:
     
     visited_nodes.add((1,1))
 
-    
+    # make a MST and return it in the format [((1,1), (1,2)), ((1,1), (2,1))
+    # keep a visited set and add the first point to it
+    # while the visited set is not equal to the number of points in the graph
+    # iterate through the points in the visited set and find the next point that is closest to it
+    # add that point to the visited set and add the edge to the MST
+    visited = set()
+    visited.add(apartments[0])
+    mst = []
+    while len(visited) != len(apartments):
+        closest_point = None
+        closest_distance = float('inf')
+        for point in visited:
+            for edge in map[point]:
+                if edge[0] not in visited and edge[1] < closest_distance:
+                    closest_point = edge[0]
+                    closest_distance = edge[1]
+        visited.add(closest_point)
+        mst.append((closest_point, closest_distance))
+    return mst
         
     
 
