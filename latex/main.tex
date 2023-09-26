@@ -63,9 +63,7 @@ help understanding how matchings work.
               \includegraphics[width=0.5\textwidth]{figures/problem-1b.png}
         \end{figure}
 
-
-
-        The following code provided does not reach $\bigO(n^2)$. For the worst case scenario all hosptials have the same preference order for all doctors, and all doctors have the same preference order for all hospital. Additionally, the hospitals list is in the same order as the preferences that all the doctors have; therefore, a stable match is when the hosptial number and docter number matches (i.e. \{ 0:0, ... , n:n\}).This means, in the first loop through the first hosptial gets matched and all other hospitals are not matched. In the second loop the program goes through all the hospitals again except for the first/matched hosptial. In the second loop on the second hosptial gets matched because all other hosptials want to get the second student, but the second student's top choice is the second hosptial. This means we get a loop has a time complexity of $\bigO(n)$ and is run $\bigO(n!)$ times. This means the algorithm is $\bigO(n!)$.  
+        The following code provided does not reach $\bigO(n^2)$. For the worst case scenario all hospitals have the same preference order for all doctors, and all doctors have the same preference order for all hospital. Additionally, the hospitals list is in the same order as the preferences that all the doctors have; therefore, a stable match is when the hospital number and Doctor number matches (i.e. \{ 0:0, ... , n:n\}).This means, in the first loop through the first hospital gets matched and all other hospitals are not matched. In the second loop the program goes through all the hospitals again except for the first/matched hospital. In the second loop on the second hospital gets matched because all other hospitals want to get the second student, but the second student's top choice is the second hospital. This means we get a loop has a time complexity of $\bigO(n)$ and is run $\bigO(n!)$ times. This means the algorithm is $\bigO(n!)$.  
     \end{solution}
 
     \begin{subproblem}
@@ -80,9 +78,9 @@ help understanding how matchings work.
     \end{subproblem}
 
     \begin{solution}
-    In order to go from $\bigO(n!)$ to $\bigO(n^2)$ there are two changes that need to be made. The first is that in problem-1b the program loops through all the hospitals even if they are matched. This means that hosptials that are already matched are still checked even when they have already been matched to a doctor. This was fixed by setting a list of unmatched hosptials at the start. When a hospital gets matched they are removed from the unmatched hospital list, and it is this list that is continuously looped thorugh until all hospitals are matched. This means a hospital is only looped through if they dont have a match.
+    In order to go from $\bigO(n!)$ to $\bigO(n^2)$ there are two changes that need to be made. The first is that in problem-1b the program loops through all the hospitals even if they are matched. This means that hospitals that are already matched are still checked even when they have already been matched to a doctor. This was fixed by setting a list of unmatched hospitals at the start. When a hospital gets matched they are removed from the unmatched hospital list, and it is this list that is continuously looped through until all hospitals are matched. This means a hospital is only looped through if they don't have a match.
     
-    The second change is the removal of a doctor from the hospitals prefernce list if they are already matched to a hosptial with a higher ranking. This prevents the program from looping through doctors that we know are matched to their preferred hospital.
+    The second change is the removal of a doctor from the hospitals preference list if they are already matched to a hospital with a higher ranking. This prevents the program from looping through doctors that we know are matched to their preferred hospital.
     
     These two changes make it so the program only loops through all the doctors once for each hospital. Each of these operations is $\bigO(n)$ so the total time complexity is $\bigO(n^2)$.
     
@@ -93,8 +91,8 @@ help understanding how matchings work.
             \item Memory: 15.53 GB
         \end{itemize}
         
-    The graph from the emperical performance analysis can be seen below:
-    \begin{figure}[h]
+    The graph from the empirical performance analysis can be seen below:
+    \begin{figure}[ht]
       \centering
           \includegraphics[width=0.5\textwidth]{figures/problem-1c.png}
     \end{figure}
@@ -159,11 +157,12 @@ and briefly describe your implementation strategy. Include your implementation i
   possible and insert it into $J$.
   \end{subproblem}
 
-\begin{solution}
-    The algorithm is correct. This algorithm was implemented. For the implementation we first sort the intervals by start time and then end time. We set up initial variables for the output list and c. We also set two pointer called max_val which starts off as the first interval and i which starts off as 0. Next, we loop through all the intervals. If a given interval's start time is less than 0 we look at if it ends after the current max_val. If it does end before the current max_val we start this as the new max_val. Regardless if the interval's start time is less than c we move onto the next interval. If the interval's start time is greater we can append the current max_val to the output list and set c to be the end time of the stored max_val. This is done because the list is sorted, so once we find a value greater than c we can leave the loop. Finally, we run into an issue with the final value missing from output list. This is solved by appending the final max_val to the output list, but a logical is used to stop an append if there is only a single value.
-    
-    The time complexity of this function is 
-\end{solution}
+    \begin{solution}
+        The algorithm is correct. This algorithm was implemented. For the implementation we first sort the intervals by start time and then end time. We set up initial variables for the output list and c. We also set two pointer called max\textunderscore val which starts off as the first interval and i which starts off as 0. Next, we loop through all the intervals. If a given interval's start time is less than 0 we look at if it ends after the current max\textunderscore val. If it does end before the current max\textunderscore val we start this as the new max\textunderscore val. Regardless if the interval's start time is less than c we move onto the next interval. If the interval's start time is greater we can append the current max\textunderscore val to the output list and set c to be the end time of the stored max\textunderscore val. This is done because the list is sorted, so once we find a value greater than c we can leave the loop. Finally, we run into an issue with the final value missing from output list. This is solved by appending the final max\textunderscore val to the output list, but a logical is used to stop an append if there is only a single value.
+
+        The time complexity of this algorithm is $O(n \log n)$ This is because the list is sorted which has a time complexity of $O(\log n)$ and we loop through each value in the list to determine if it should be added to the covering interval which has a time complexity of $O(n)$. This means the total run time is $O(n \log n)$
+        
+    \end{solution}
 
   \begin{subproblem}
     \textbf{Select Longest Interval:}
@@ -288,9 +287,11 @@ though not necessarily for every tie-breaking rule.
     $\rank_i$ and $\rank_j$ and a threshold $\delta$. Describe the algorithm in the write-up, and include your implementation in \texttt{problem\_3/p3\_a.py}.
   \end{subproblem}
 
-\begin{solution}
-Please answer here.
-\end{solution}
+        \begin{solution}
+            To start off we initialize the number of large inversion to 0. Next, we loop through the length of the list provided. This gives us the index of the first value we are looking at ($x$). We then loop through all values after ($x$) to the end of the list. This gives us pairs of ($x,y$) where $x$ will always be less than $y$. Finally, we check to see if $rank_j(x)$ is > $rank_j(y) + \delta$. If this is true then we add one to the number of large inversions we are counting.
+
+            This algorithm would run in $O(n^2)$ because we are looping through the list a total of 2 times. Once to set $x$ and once to set $y$.
+        \end{solution}
 
   \begin{subproblem}
     (\textit{14 points})
