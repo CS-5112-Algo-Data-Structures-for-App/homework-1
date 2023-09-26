@@ -21,8 +21,9 @@ def most_frequent_difference_a(values: list, d_mode: int) -> int:
     res = 0
 
     new_list = []
+    
     # make a list where all duplicates of a number is represented as (number, number of duplicates) in O(n) time
-    # ie. [1,1,1,2,2,3] -> [(1,3), (2,2), (3,1)]
+    # i.e. [1,1,1,2,2,3] -> [(1,3), (2,2), (3,1)]
     i = 0
     while i < len(values):
         j = i + 1
@@ -68,4 +69,4 @@ def binary_search(values: list[tuple[int, int]], target: int) -> int:
     return -1
 
 # should be 4
-delta_freq = most_frequent_difference_a([2,2,4,4], 2)
+# delta_freq = most_frequent_difference_a([2,2,4,4], 2)

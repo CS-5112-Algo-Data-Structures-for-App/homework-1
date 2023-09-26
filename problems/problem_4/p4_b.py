@@ -41,4 +41,4 @@ def most_frequent_difference_b(values: list, d_mode: int) -> int:
     return res
 
 # should be 4
-delta_freq = most_frequent_difference_b([2,2,4,4], 2)
+# delta_freq = most_frequent_difference_b([2,2,4,4], 2)
