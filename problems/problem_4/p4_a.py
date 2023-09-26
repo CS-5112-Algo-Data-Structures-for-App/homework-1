@@ -67,6 +67,3 @@ def binary_search(values: list[tuple[int, int]], target: int) -> int:
         else:
             right = mid - 1
     return -1
-
-# should be 4
-# delta_freq = most_frequent_difference_a([2,2,4,4], 2)

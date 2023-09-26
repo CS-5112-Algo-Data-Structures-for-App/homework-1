@@ -10,21 +10,55 @@ def calculate_manhattan_distance(a: tuple[int, int], b: tuple[int, int]) -> int:
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 def cookies_distrubution_map(apartments) -> list:
-    #using all the points in the graph create a map of all the points and their distances from each other
-    #for each point in the graph, calculate the distance to all other points and store it in a map
-    #the map should be of the form {(x,y): [(x1,y1, distance), (x2,y2, distance)]}
-    #for each point in the graph, calculate the distance to all other points and store it in a map
-    #the map should be of the form {(x,y): [(x1,y1, distance), (x2,y2, distance)]}
-    map = {}
-    for i in range(len(apartments)):
-        for j in range(len(apartments)):
-            if i != j:
-                distance = calculate_manhattan_distance(apartments[i], apartments[j])
-                if apartments[i] not in map:
-                    map[apartments[i]] = [(apartments[j], distance)]
-                else:
-                    map[apartments[i]].append((apartments[j], distance))
-
-    # make a MST and return it in the format [((1,1), (1,2)), ((1,1), (2,1))
     
-    return []
+    # Add in origin node if not already in the set (1,1)
+    if (1,1) not in apartments:
+        apartments.insert(0,(1,1))
+    
+    # Creates a list of links with the following format (origin,destination,distance)
+    links = []
+    for origin_apt in apartments:
+        for destination_apt in apartments:
+            if origin_apt != destination_apt:
+                links.append((origin_apt,destination_apt, calculate_manhattan_distance(origin_apt,destination_apt)))
+    
+    # Sort links by distance low to high
+    links.sort(key = lambda link: link[2])
+    
+    mst = []
+    visited_nodes = set()
+    
+    # Go through each link
+    for link in links:
+        origin_node = link[0]
+        destination_node = link[1]
+        
+        # Check if cycle
+        if origin_node not in visited_nodes or destination_node not in visited_nodes:
+            mst.append((origin_node,destination_node))
+            visited_nodes.add(origin_node) #
+            visited_nodes.add(destination_node)
+    
+
+    # for edge
+    # # If the two vertices are not already in the spanning tree, add the edge to the spanning tree.
+    # if vertex1 not in mst_vertices or vertex2 not in mst_vertices:
+    #     mst_edges.append(edge)
+    #     mst_vertices.add(vertex1)
+    #     mst_vertices.add(vertex2)
+
+    return mst
+    
+
+
+
+
+print(cookies_distrubution_map([(1,4), (5, 1), (5, 5), (5, 4), (3, 2), (6, 4)]))
+
+# ans 
+# ((1,1), (3, 2)),
+# ((3,2), (5,1)), 
+# ((1,1), (1,4)),
+# ((5,4), (5,5)), 
+# ((5,4), (6,4)),
+# ((5,1), (5,4))

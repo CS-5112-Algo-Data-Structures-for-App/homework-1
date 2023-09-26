@@ -30,7 +30,6 @@ def most_frequent_difference_b(values: list, d_mode: int) -> int:
         # if the value + d_mode is in the dictionary, we have a pair
         if value + d_mode in values_dict:
             # if d_mode is not 0, we can just add the number of times the value + d_mode appears in the list to the res
-            # since we can form that many pairs
             if d_mode != 0:
                 res += values_dict[value + d_mode]
             # if d_mode is 0, we need to subtract 1 from the number of times the value + d_mode appears in the list
@@ -39,6 +38,3 @@ def most_frequent_difference_b(values: list, d_mode: int) -> int:
                 res += values_dict[value + d_mode] - 1
 
     return res
-
-# should be 4
-# delta_freq = most_frequent_difference_b([2,2,4,4], 2)
