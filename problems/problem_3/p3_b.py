@@ -32,8 +32,23 @@ def number_of_large_inversions_3b(file, delta) -> int:
                 else:
                     i += 1
 
-            merge_lst = a_lst + b_lst
-            merge_lst.sort()
+            # merge a_lst and b_lst
+            merge_lst = []
+            i = 0
+            j = 0
+            while i < len(a_lst) and j < len(b_lst):
+                if a_lst[i] < b_lst[j]:
+                    merge_lst.append(a_lst[i])
+                    i += 1
+                else:
+                    merge_lst.append(b_lst[j])
+                    j += 1
+            while i < len(a_lst):
+                merge_lst.append(a_lst[i])
+                i += 1
+            while j < len(b_lst):
+                merge_lst.append(b_lst[j])
+                j += 1
 
             return merge_lst, inv
 
