@@ -4,7 +4,7 @@
 % STUDENTS: Please fill these out with your information
 \newcommand{\name}{Matthew Shen}
 \newcommand{\netid}{mds377}
-\newcommand{\collaborators}{Linjing Rao(lr534)}
+\newcommand{\collaborators}{All my friends dropped out of the class :(}
 % / STUDENT
 
 \newcommand{\hwnum}{1}
@@ -197,7 +197,25 @@
         \end{subproblem}
 
         \begin{solution}
-            Please answer here.
+            For this algorithm a combination of divide and conquer and merge sort was used. To start off the a new list was created based on the length of the input list from $[0,...,n]$. This list was then sorted based on input list. This gave us a rank list of the values. Next, the rank list was divided in half until each list was split to a length of 1. Then, the lists were merge sorted together, where each time the right side or higher list was selected from the length of the left side or lower size minus the indexing position was added to the number of inversions. We can do this because when you pull from the right side list you know that the value is an inversion of all values after the pointer on the left side list. This produces an $O(n\log n)$ run time because it is divide and conquer. 
+            For the empirical performance analysis the environment was:
+                \begin{itemize}
+                    \item CPU: Intel(R) Core(TM) i7-8500Y CPU @ 1.50GHz (4 threads, 4.20GHz)
+                    \item OS \& Version: Debian GNU/Linux 11 (bullseye)
+                    \item Memory: 15.53 GB
+                \end{itemize}
+                    
+                The graph from the empirical performance analysis can be seen below:
+                \begin{figure}[ht]
+                  \centering
+                      \includegraphics[width=0.5\textwidth]{figures/problem-3b.png}
+                \end{figure}
+                We can see that at $n=8$ the $O(n\log n)$ value becomes faster for this environment. This is better seen in below:
+                \begin{figure}[ht]
+                  \centering
+                      \includegraphics[width=0.5\textwidth]{figures/problem-3a.png}
+                \end{figure}
+            
         \end{solution}
 \end{problem}
 
@@ -245,6 +263,8 @@
           \centering
               \includegraphics[width=0.5\textwidth]{figures/problem-4.png}
         \end{figure}
+
+        The biggest trade off between the two algorithms is that the $O(n)$ value takes up substantially more memory. For the $O(n \log n)$ we are creating a list of tuples that we run through. This means the binary search can use the same originally stored frequency list. For the $O(n)$ we need to create a dictionary to increase the indexing speed. This dictinary then takes up more memory.
     \end{solution}
     
     Note that the mode can be negative. If $\delta_{i, j}$ is a mode of the list, then $-\delta_{i, j} = \delta_{j, i}$ will be a mode too. The input to the function will be one of these modes, which can be positive, negative, or 0.
@@ -256,40 +276,23 @@
 % Problem 5
 
 \begin{problem}
-  Eman baked some cookies for her friends, and asked Avital to help
-  by distributing them among their friends. 
-  Their group of friends is very close-knit, so they all live in a building 
-  together, called ``The Building''.
+    Eman baked some cookies for her friends, and asked Avital to help by distributing them among their friends. Their group of friends is very close-knit, so they all live in a building together, called ``The Building''.
   
-  The architect of ``The Building'' designed 
-  the property such that every floor is a very long corridor. To one side of 
-  the corridor are all the apartments in that floor, with the distance between 
-  every pair of consecutive doors being always the same.   
-  The architect is not very fond of elevators, so to the other side of the 
-  corridor, there is a pair of staircases in front of every apartment door,
-  leading to all the floors in the building. 
-  Apartments are labeled first by floor and then by index in the floor, hence 
-  $apt_{(12,21)}$ is the 21st apartment in the 12 floor.
+    The architect of ``The Building'' designed the property such that every floor is a very long corridor. To one side of the corridor are all the apartments in that floor, with the distance between every pair of consecutive doors being always the same. The architect is not very fond of elevators, so to the other side of the corridor, there is a pair of staircases in front of every apartment door, leading to all the floors in the building. Apartments are labeled first by floor and then by index in the floor, hence $apt_{(12,21)}$ is the 21st apartment in the 12 floor.
 
-  Avital is not a big fan of walking, so as she delivers the cookies,
-  she may give some extra cookies to her friends, and ask them to
-  distribute them to some other friends. All the friends may subsequently
-  divide their cookies and ask other friends to help with the deliveries too. 
+    Avital is not a big fan of walking, so as she delivers the cookies, she may give some extra cookies to her friends, and ask them to distribute them to some other friends. All the friends may subsequently divide their cookies and ask other friends to help with the deliveries too. 
   
-  Avital wants to minimize everyone's total number of steps. Assume that the distance between an apartment $apt_{(f,i)}$ and $apt_{(f,i+1)}$ is the same as that between $apt_{(f,i)}$ and $apt_{(f+1,i)}$. 
+    Avital wants to minimize everyone's total number of steps. Assume that the distance between an apartment $apt_{(f,i)}$ and $apt_{(f,i+1)}$ is the same as that between $apt_{(f,i)}$ and $apt_{(f+1,i)}$. 
   
-  Assume the friends are distributed across $n$ apartments,
-  where each apartment, including Eman's, has $p > n$ friends
-  currently hanging out.
-  Finally, assume that Avital starts at apartment $apt_{(1,1)}$,
-  where Eman lives, and she can recruit some of the friends currently there.
+    Assume the friends are distributed across $n$ apartments, where each apartment, including Eman's, has $p > n$ friends currently hanging out. Finally, assume that Avital starts at apartment $apt_{(1,1)}$, where Eman lives, and she can recruit some of the friends currently there.
 
-  (\textit{20 points}) Design and implement an algorithm that given a list of apartments where the friends live, returns pairs $(a, b)$, where friends from apartment $a$ take the cookies to the friends from apartment $b$, that minimize the total number of steps. Your algorithm should run in $O(n^2 \log n)$.
-  Describe your algorithm in the write-up and include your implementation in \texttt{problem\_5/p5.py}.
+    (\textit{20 points}) Design and implement an algorithm that given a list of apartments where the friends live, returns pairs $(a, b)$, where friends from apartment $a$ take the cookies to the friends from apartment $b$, that minimize the total number of steps. Your algorithm should run in $O(n^2 \log n)$. Describe your algorithm in the write-up and include your implementation in \texttt{problem\_5/p5.py}.
 
-\begin{solution}
-Please answer here.
-\end{solution}
+    \begin{solution}
+        The following algorithms starts off by making an dictionary where the keys are origin nodes and the values are destination nodes with the Manhattan Distance. Next, Prim's algorithms is used and starts at (1,1) or Eman/Avitals's apartment. It then creates a minimum spanning tree that gives the locations in which the cookies should be distributed to minimize walking.
+
+        The given algorithm is $n^2 \log n$ because the run time of Prim's algorithm is $|E| \log |V|$, and $|E|$ is $|V^2|$ at worst.
+    \end{solution}
 \end{problem}
 
 \begin{challenge}
