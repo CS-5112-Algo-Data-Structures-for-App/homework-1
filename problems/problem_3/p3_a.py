@@ -17,11 +17,12 @@ def number_of_large_inversions_3a(file, delta) -> int:
         lst = [int(element) for element in list(f.readline().split())]
         
     inversions = 0
-    
-            
+   
     for x in range(n):
         for y in range(x+1, n):
+            
             if lst.index(x+1) > lst.index(y+1) + delta:
                 inversions += 1
+                 
                 
     return inversions      

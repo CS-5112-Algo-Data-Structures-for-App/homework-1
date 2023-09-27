@@ -26,43 +26,17 @@ def cookies_distrubution_map(apartments) -> list:
                     apartments_dict[apartments[i]] = [(apartments[j], distance)]
                 else:
                     apartments_dict[apartments[i]].append((apartments[j], distance))
-    
-    links_mst= []
+
     visited_nodes = set()
-    
-    visited_nodes.add((1,1))
-
-    # make a MST and return it in the format [((1,1), (1,2)), ((1,1), (2,1))
-    # keep a visited set and add the first point to it
-    # while the visited set is not equal to the number of points in the graph
-    # iterate through the points in the visited set and find the next point that is closest to it
-    # add that point to the visited set and add the edge to the MST
-    visited = set()
-    visited.add(apartments[0])
+    visited_nodes.add(apartments[0])
     mst = []
-    while len(visited) != len(apartments):
-        closest_point = None
-        closest_distance = float('inf')
-        for point in visited:
-            for edge in map[point]:
-                if edge[0] not in visited and edge[1] < closest_distance:
-                    closest_point = edge[0]
-                    closest_distance = edge[1]
-        visited.add(closest_point)
-        mst.append((closest_point, closest_distance))
+    while len(visited_nodes) < len(apartments):
+        best_link = (None,None,float('inf'))
+        for origin_node in visited_nodes:
+            for link in apartments_dict[origin_node]:
+                if link[0] not in visited_nodes and link[1] < best_link[2]:
+                    best_link = (origin_node,link[0],link[1])
+        visited_nodes.add(best_link[1])
+        mst.append((best_link[0],best_link[1]))
     return mst
-        
     
-
-
-
-
-print(cookies_distrubution_map([(1,4), (5, 1), (5, 5), (5, 4), (3, 2), (6, 4)]))
-
-# ans 
-# ((1,1), (3, 2)),
-# ((3,2), (5,1)), 
-# ((1,1), (1,4)), 
-# ((5,4), (5,5)), 
-# ((5,4), (6,4)), #
-# ((5,1), (5,4))
